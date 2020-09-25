@@ -34,6 +34,11 @@
   - [Install the Bootloader](#install-the-bootloader)
   - [Reboot the System](#reboot-the-system)
   - [Make Artix Dual Bootable](#make-artix-dual-bootable)
+- [Install to make artix usable](#install-to-make-artix-usable)
+  - [Set tty default font](#set-tty-default-font)
+  - [Install drivers](#install-drivers)
+  - [Install require packages](#install-require-packages)
+  - [Install Window Manager](install-window-manager)
 
 # Install Artix dual boot
 
@@ -45,7 +50,7 @@ Or if you already know how to use Disk Utility, then create a partition with FAT
 
 ## Make installer USB
 
-Download artix base iso [here](https://iso.artixlinux.org/isos.php)
+Download Artix base ISO [here](https://iso.artixlinux.org/isos.php)
 
 Find usb by using `lsblk` or `diskutil list`, etc..., then:
 
@@ -59,7 +64,7 @@ dd if=path/to/arch.iso of=/dev/diskX bs==1m
 
 Hold <kbd>alt/option</kbd> when system bootup, then choose boot from USB.
 
-:warning: If you are using Retina Macbook, tty font will be very small. To get larger font, [connect to wifi](connect-wifi) and run these commands:
+:warning: If you are using Retina Macbook, tty font will be very small. To get larger font, [connect to wifi](#connect-wifi) and run these commands:
 
 ```sh
 sudo pacman -Sy terminus-font
@@ -70,7 +75,7 @@ Or you can use some font already in `/usr/share/kbd/consolefonts`
 
 ## Login
 
-After boot up, choose `keytable`, `lang` or leave it default if you not sure what is it, then choose:
+After boot up, choose `keytable`, `lang` or leave it default if you not sure what are they, then choose:
 
 `[From CD/DVD/ISO: artix.x86_64]`
 
@@ -154,13 +159,6 @@ Then check connection with:
 ping -c 3 google.com
 ```
 
-From there you can install your favorite editor to prepare for next steps, example:
-
-```sh
-# I use vim
-sudo pacman -S vim
-```
-
 ## Install Base System
 
 I'm using runit so:
@@ -190,7 +188,7 @@ basestrap /mnt linux-lts linux-firmware
 Run this command:
 
 ```sh
- fstabgen -U /mnt >> /mnt/etc/fstab
+fstabgen -U /mnt >> /mnt/etc/fstab
 ```
 
 :warning: If you are using SSD Drive, Open fstab config file:
@@ -201,9 +199,8 @@ vim /mnt/etc/fstab
 
 Remove all `discard` in all lines & edit everything to look like:
 
-|---        |---   |---   |---                              |---|
-|/dev/sda4  |/boot |ext2  |defaults,relatime,stripe=4       |0 2|
-|/dev/sda6  |/     |ext4  |defaults,noatime,data=writeback  |0 1|
+/dev/sda4   /boot   ext2   defaults,relatime,stripe=4        0 2
+/dev/sda6   /       ext4   defaults,noatime,data=writeback   0 1
 
 ## Configure the Base System
 
@@ -288,7 +285,7 @@ Change `/etc/default/grub` to look like:
 GRUB_CMDLINE_LINUX_DEFAULT="quiet rootflags=data=writeback"
 ```
 
-:⚠: If you using `linux` kernel instead of `linux-lts` kernel, you may try this:
+⚠ If you using `linux` kernel instead of `linux-lts` kernel, you may try this:
 
 ```sh
 GRUB_CMDLINE_LINUX_DEFAULT="nomodeset quiet rootflags=data=writeback"
@@ -359,4 +356,53 @@ Add below content to `SystemVersion.plist`:
 ```
 
 Then reboot and hold <kbd>alt/option</kbd> and enjoy Artix 😺
+
+# Install to make artix usable
+
+## Set tty default font
+
+:warning: Font in retina screen is very small, so this maybe the first step you should do . If you can see the font clearly, you don't have to do this step.
+
+Install terminus-font (or whatever font you prefer, make sure it have large size): 
+
+```sh
+sudo pacman -S terminus-font
+```
+
+create file `/etc/vconsole.conf` with content:
+
+```
+FONT=ter-132b
+```
+
+Install these default fonts (to make browser look suckless):
+
+```
+yay -S ttf-dejavu ttf-linux-libertine ttf-mac-fonts ttf-ms-fonts ttf-opensans ttf-ubuntu-font-family ttf-symbola
+```
+
+## Install drivers
+
+```
+sudo pacman -S xf86-video-intel xf86-input-libinput mesa
+```
+
+## Install require packages
+
+Using pacman to install all these packages:   
+
+|Package       | Description |
+|---           |---          |
+|xorg-server   | graphical server |
+|xorg-xinit    | starts graphical server |
+|xorg-xrandr   | resize & rotate utility for X |
+|xorg-xsetroot | utility to set your root window background to a given pattern or color |
+|xorg-xev      | indentifying keycodes |
+|picom         | lightweight compositor for X11 |
+|xwallpaper    | set wallpaper |
+|arandr        | UI for screen adjustment |
+
+## Install Window Manager
+
+I build my own [dwm](https://github.com/kyoz/dwm), [dmenu](https://github.com/kyoz/dmenu), [st](https://github.com/kyoz/st) from [suckless](https://suckless.org/)
 
