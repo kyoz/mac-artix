@@ -378,7 +378,7 @@ FONT=ter-132b
 Install these default fonts (to make browser look suckless):
 
 ```
-yay -S ttf-dejavu ttf-linux-libertine ttf-mac-fonts ttf-ms-fonts ttf-opensans ttf-ubuntu-font-family ttf-symbola
+yay -S ttf-mac-fonts ttf-ms-fonts ttf-opensans
 ```
 
 ## Install drivers
@@ -405,4 +405,6 @@ Using pacman to install all these packages:
 ## Install Window Manager
 
 I build my own [dwm](https://github.com/kyoz/dwm), [dmenu](https://github.com/kyoz/dmenu), [st](https://github.com/kyoz/st) from [suckless](https://suckless.org/)
+
+But you can install any window manager you like
 
