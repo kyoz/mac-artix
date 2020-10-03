@@ -408,3 +408,10 @@ I build my own [dwm](https://github.com/kyoz/dwm), [dmenu](https://github.com/ky
 
 But you can install any window manager you like
 
+
+
+## Bluetooth
+pacman -S bluez bluez-runit bluez-utils
+ln -s /etc/runit/sv/bluetoothd /run/runit/service
+sv start bluetoothd
+sv restart bluetoothd
