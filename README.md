@@ -415,3 +415,10 @@ pacman -S bluez bluez-runit bluez-utils
 ln -s /etc/runit/sv/bluetoothd /run/runit/service
 sv start bluetoothd
 sv restart bluetoothd
+
+For bluetooth audio device, install these
+```sh
+sudo pacman -S pulseaudio-alsa pulseaudio-bluetooth
+```
+
+You may need install blueman for easily manage your bluetooth devices
