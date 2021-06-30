@@ -18,6 +18,7 @@
 
 # Contents
 
+- [Before you start](#before-you-start)
 - [Install Artix dual boot](#install-artix-dual-boot)
   - [Make space for Artix](#make-space-for-artix)
   - [Make installer USB](#make-installer-usb)
@@ -39,6 +40,11 @@
   - [Install drivers](#install-drivers)
   - [Install require packages](#install-require-packages)
   - [Install Window Manager](install-window-manager)
+
+
+# Before you start
+
+It's seem [Macbook with T2 Security](https://support.apple.com/en-us/HT208862) isn't support linux very well, view this [discussions](https://discussions.apple.com/thread/251087440?answerId=252062188022#252062188022)
 
 # Install Artix dual boot
 
